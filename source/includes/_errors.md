@@ -1,6 +1,6 @@
 # Errors
 
-The Gopher API uses the following error codes:
+The Guestbook API uses the following error codes:
 
 
 Error Code | Meaning
