@@ -53,6 +53,9 @@ Retrieve Pending and Available balance for an SH Group Loyalty Member.
 
 `GET https://api.guestrewards.com/v1/account/balance`
 
+### Headers
+Content-Type: application/json
+
 ### Query Parameters
 
 Parameter | type | Default | Description
