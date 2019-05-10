@@ -253,10 +253,9 @@
  - This documentation has not been finalized and is still a work in progress.</p>
 
 <p><strong>TODO:</strong><br>
- - Provision test environment.<br>
- - Add API authorization (JWT, white list server IP)</p>
+ - Provision test environment.<br></p>
 <h1 id='authentication'>Authentication</h1>
-<p>TBD</p>
+<p>JWT for Authorization (https://jwt.io/) </p>
 <h1 id='account-information'>Account Information</h1><h2 id='get-pending-amp-available-balance'>Get Pending &amp; Available Balance</h2><pre class="highlight ruby tab-ruby"><code> <span class="c1"># TODO add ruby example</span>
 </code></pre>
 <blockquote>
@@ -303,7 +302,7 @@
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your client credentials or access token is invalid.</td>
+<td>Unauthorized -- Your JWT Authorization token token is invalid.</td>
 </tr>
 <tr>
 <td>403</td>
