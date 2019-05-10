@@ -24,11 +24,10 @@ API Documentation for Guestbook White Label
 
 **TODO:**<br>
  - Provision test environment.<br>
- - Add API authorization (JWT, white list server IP)
 
 # Authentication
 
-TBD
+JWT for Authorization (https://jwt.io/) 
 
 # Account Information
 
