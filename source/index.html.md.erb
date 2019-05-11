@@ -97,9 +97,15 @@ for getting information relating to a specific user's account, like getting <a h
 
 ### Query Parameters
 
-Parameter | type | Default | Description
---------- | ---- | ------- | -----------
-cendyn_account_token | String | nil | https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login
+Parameter | type | Description
+--------- | ---- | -----------
+cendyn_account_token | Text | https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login
+
+### Response
+
+Parameter | type | Description
+--------- | ---- | -----------
+token | Text | GUESTBOOK_TOKEN
 
 
 # Account Information
@@ -141,7 +147,7 @@ Retrieve Pending and Available balance for an SH Group Loyalty Member.
 
 Parameter | type | Description
 --------- | ---- | -----------
-token | String | GUESTBOOK_TOKEN received from <a href="#get-account-token">Get Account Token</a>
+token | Text | GUESTBOOK_TOKEN received from <a href="#get-account-token">Get Account Token</a>
 
 ### Response
 Parameter | type | Description
