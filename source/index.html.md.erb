@@ -1,0 +1,138 @@
+---
+title: API Reference
+
+language_tabs: # must be one of https://git.io/vQNgJ
+  - shell
+
+toc_footers:
+  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+
+includes:
+  - errors
+
+search: true
+---
+
+# Introduction
+
+API Documentation for Guestbook White Label
+
+**Version:** 1.0
+
+**TODO:**<br>
+ - Provision test environment. Currently the available and pending balance data is hardcoded.<br>
+
+# Authentication
+## Server-to-server JWT for Authorization
+
+> [1] CURL request example to get an authorization TOKEN:
+
+```shell
+curl --request POST \
+  --url https://guestrewards.auth0.com/oauth/token \
+  --header 'content-type: application/json' \
+  --data '{"client_id":"CLIENT_ID","client_secret":"CLIENT_SECRET","audience":"https://guestrewards.auth0.com/api/v2/","grant_type":"client_credentials"}'
+```
+
+> [2] Example JSON response from a request to get an authorization TOKEN:
+
+```json
+{
+  "access_token": "AUTH_TOKEN",
+  "token_type": "Bearer"
+}
+```
+
+> [3] Example CURL request passing the TOKEN to authorize an API request:
+
+```shell
+curl --request GET \
+  --url http://api.guestrewards.com/v1/account/balance/ \
+  --header 'authorization: Bearer AUTH_TOKEN'
+```
+<%= image_tag 'images/client-credentials-grant.png'  %>(https://jwt.io/introduction/)<br><br>
+
+1. The application or client requests authorization to the authorization server. NOTE: You must request/use the CLIENT_ID and CLIENT_SECRET supplied by The Guestbook.[1]
+2. When the authorization is granted, the authorization server returns an access token to the application.[2]
+3. The application uses the access token to access a protected resource (like an API).[3]
+
+# Get Account Token
+
+## Exchange the account token received from Cendyn's API to get one for making API calls to The Guestbook.
+
+> [4] CURL request example to get a Guestbook account token:
+
+```shell
+curl --request GET \
+  --url http://api.guestrewards.com/v1/account/token/ \
+  --header 'authorization: Bearer AUTH_TOKEN' \
+  --data '{"cendyn_account_token":"CENDYN_TOKEN"}'
+```
+
+> [5] Example JSON response from a request to get a Guestbook account token:
+
+```json
+{
+    "token": "GUESTBOOK_TOKEN"
+}
+```
+
+When calling Cendyn's API (Version 4) to get a <a href="https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login">member's account information</a>, set the `return_logintoken` to `true`.
+This token, referred to as `CENDYN_TOKEN` in this document, is used when calling Guestbook's get token API[4] to receive an account token which is used for making API calls to The Guestbook
+for getting information relating to a specific user's account, like getting <a href="#get-pending-amp-available-balance">pending and available balance</a>.
+
+### HTTP Request
+
+`GET https://api.guestrewards.com/v1/account/token`
+
+### Headers
+
+`Content-Type: application/json`<br>
+`Authorization: Bearer AUTH_TOKEN` (`AUTH_TOKEN` received from <a href="#authentication">Authentication</a>)
+
+### Query Parameters
+
+Parameter | type | Default | Description
+--------- | ---- | ------- | -----------
+cendyn_account_token | String | nil | https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login
+
+
+# Account Information
+
+## Get Pending & Available Balance
+
+> [6] Example JSON response from a request to get an account's pending & available balance:
+
+```json
+{
+    "pending": 40.32,
+    "available": 123.67,
+    "currency_abbreviation": "USD",
+    "currency_symbol": "$"
+}
+```
+
+Retrieve Pending and Available balance for an SH Group Loyalty Member.
+
+### HTTP Request
+
+`GET https://api.guestrewards.com/v1/account/balance`
+
+### Headers
+
+`Content-Type: application/json`<br>
+`Authorization: Bearer AUTH_TOKEN` (`AUTH_TOKEN` received from <a href="#authentication">Authentication</a>)
+
+### Query Parameters
+
+Parameter | type | Description
+--------- | ---- | -----------
+token | String | GUESTBOOK_TOKEN received from <a href="#get-account-token">Get Account Token</a>
+
+### Response
+Parameter | type | Description
+--------- | ---- | -----------
+pending | <a href="http://www.postgresqltutorial.com/postgresql-numeric/">numeric(9,2)</a> | Pending rewards balance. This is the amount that's pending approval.
+available | <a href="http://www.postgresqltutorial.com/postgresql-numeric/">numeric(9,2)</a> | Available rewards balance. This is the amount the user has available for redemption.
+currency_abbreviation | String | <a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4717</a> three letter currency abbreviation.
+currency_symbol | String | <a href="https://en.wikipedia.org/wiki/Currency_symbol">Symbol</a> representation of the account's currency.
