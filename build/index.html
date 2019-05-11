@@ -202,7 +202,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;ruby&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,7 +212,7 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="shell">shell</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -224,6 +224,19 @@
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#server-to-server-jwt-for-authorization" class="toc-h2 toc-link" data-title="Server-to-server JWT for Authorization">Server-to-server JWT for Authorization</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#get-account-token" class="toc-h1 toc-link" data-title="Get Account Token">Get Account Token</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#exchange-the-account-token-received-from-cendyn-39-s-api-to-get-one-for-making-api-calls-to-the-guestbook" class="toc-h2 toc-link" data-title="Exchange the account token received from Cendyn's API to get one for making API calls to The Guestbook.">Exchange the account token received from Cendyn's API to get one for making API calls to The Guestbook.</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#account-information" class="toc-h1 toc-link" data-title="Account Information">Account Information</a>
@@ -247,30 +260,65 @@
         <h1 id='introduction'>Introduction</h1>
 <p>API Documentation for Guestbook White Label</p>
 
-<p><strong>Current Version:</strong><br> Alpha 1.0</p>
-
-<p><strong>NOTES:</strong><br>
- - This documentation has not been finalized and is still a work in progress.</p>
+<p><strong>Version:</strong> 1.0</p>
 
 <p><strong>TODO:</strong><br>
- - Provision test environment.<br></p>
-<h1 id='authentication'>Authentication</h1>
-<p>JWT for Authorization (https://jwt.io/) </p>
-<h1 id='account-information'>Account Information</h1><h2 id='get-pending-amp-available-balance'>Get Pending &amp; Available Balance</h2><pre class="highlight ruby tab-ruby"><code> <span class="c1"># TODO add ruby example</span>
+ - Provision test environment. Currently the available and pending balance data is hardcoded.<br></p>
+<h1 id='authentication'>Authentication</h1><h2 id='server-to-server-jwt-for-authorization'>Server-to-server JWT for Authorization</h2>
+<blockquote>
+<p>[1] CURL request example to get an authorization TOKEN:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl --request POST <span class="se">\</span>
+  --url https://guestrewards.auth0.com/oauth/token <span class="se">\</span>
+  --header <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
+  --data <span class="s1">'{"client_id":"CLIENT_ID","client_secret":"CLIENT_SECRET","audience":"https://guestrewards.auth0.com/api/v2/","grant_type":"client_credentials"}'</span>
 </code></pre>
 <blockquote>
-<p>The endpoint returns JSON structured like this:</p>
+<p>[2] Example JSON response from a request to get an authorization TOKEN:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"pending"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$40.32"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$123.67"</span><span class="w">
+  </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTH_TOKEN"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Retrieve Pending and Available balance for an SH Group Loyalty Member.</p>
+<blockquote>
+<p>[3] Example CURL request passing the TOKEN to authorize an API request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
+  --url http://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
+  --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span>
+</code></pre>
+<p><img src="images/client-credentials-grant.png" alt="Client credentials grant" />(https://jwt.io/introduction/)<br><br></p>
+
+<ol>
+<li>The application or client requests authorization to the authorization server. NOTE: You must request/use the CLIENT_ID and CLIENT_SECRET supplied by The Guestbook.[1]</li>
+<li>When the authorization is granted, the authorization server returns an access token to the application.[2]</li>
+<li>The application uses the access token to access a protected resource (like an API).[3]</li>
+</ol>
+<h1 id='get-account-token'>Get Account Token</h1><h2 id='exchange-the-account-token-received-from-cendyn-39-s-api-to-get-one-for-making-api-calls-to-the-guestbook'>Exchange the account token received from Cendyn&#39;s API to get one for making API calls to The Guestbook.</h2>
+<blockquote>
+<p>[4] CURL request example to get a Guestbook account token:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
+  --url http://api.guestrewards.com/v1/account/token/ <span class="se">\</span>
+  --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span> <span class="se">\</span>
+  --data <span class="s1">'{"cendyn_account_token":"CENDYN_TOKEN"}'</span>
+</code></pre>
+<blockquote>
+<p>[5] Example JSON response from a request to get a Guestbook account token:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GUESTBOOK_TOKEN"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>When calling Cendyn&#39;s API (Version 4) to get a <a href="https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login">member&#39;s account information</a>, set the <code>return_logintoken</code> to <code>true</code>.
+This token, referred to as <code>CENDYN_TOKEN</code> in this document, is used when calling Guestbook&#39;s get token API[4] to receive an account token which is used for making API calls to The Guestbook
+for getting information relating to a specific user&#39;s account, like getting <a href="#get-pending-amp-available-balance">pending and available balance</a>.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET https://api.guestrewards.com/v1/account/balance</code></p>
+<p><code>GET https://api.guestrewards.com/v1/account/token</code></p>
 <h3 id='headers'>Headers</h3>
-<p>Content-Type: application/json</p>
+<p><code>Content-Type: application/json</code><br>
+<code>Authorization: Bearer AUTH_TOKEN</code> (<code>AUTH_TOKEN</code> received from <a href="#authentication">Authentication</a>)</p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -285,6 +333,66 @@
 <td>String</td>
 <td>nil</td>
 <td>https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login</td>
+</tr>
+</tbody></table>
+<h1 id='account-information'>Account Information</h1><h2 id='get-pending-amp-available-balance'>Get Pending &amp; Available Balance</h2>
+<blockquote>
+<p>[6] Example JSON response from a request to get an account&#39;s pending &amp; available balance:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"pending"</span><span class="p">:</span><span class="w"> </span><span class="mf">40.32</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"available"</span><span class="p">:</span><span class="w"> </span><span class="mf">123.67</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency_abbreviation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Retrieve Pending and Available balance for an SH Group Loyalty Member.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://api.guestrewards.com/v1/account/balance</code></p>
+<h3 id='headers-2'>Headers</h3>
+<p><code>Content-Type: application/json</code><br>
+<code>Authorization: Bearer AUTH_TOKEN</code> (<code>AUTH_TOKEN</code> received from <a href="#authentication">Authentication</a>)</p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>token</td>
+<td>String</td>
+<td>GUESTBOOK_TOKEN received from <a href="#get-account-token">Get Account Token</a></td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pending</td>
+<td><a href="http://www.postgresqltutorial.com/postgresql-numeric/">numeric(9,2)</a></td>
+<td>Pending rewards balance. This is the amount that&#39;s pending approval.</td>
+</tr>
+<tr>
+<td>available</td>
+<td><a href="http://www.postgresqltutorial.com/postgresql-numeric/">numeric(9,2)</a></td>
+<td>Available rewards balance. This is the amount the user has available for redemption.</td>
+</tr>
+<tr>
+<td>currency_abbreviation</td>
+<td>String</td>
+<td><a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4717</a> three letter currency abbreviation.</td>
+</tr>
+<tr>
+<td>currency_symbol</td>
+<td>String</td>
+<td><a href="https://en.wikipedia.org/wiki/Currency_symbol">Symbol</a> representation of the account&#39;s currency.</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
@@ -302,7 +410,7 @@
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your JWT Authorization token token is invalid.</td>
+<td>Unauthorized -- Your JWT Authorization token token is invalid/expired.</td>
 </tr>
 <tr>
 <td>403</td>
@@ -321,7 +429,7 @@
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="shell">shell</a>
           </div>
       </div>
     </div>
