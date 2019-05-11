@@ -329,15 +329,27 @@ for getting information relating to a specific user&#39;s account, like getting 
 <tr>
 <th>Parameter</th>
 <th>type</th>
-<th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>cendyn_account_token</td>
-<td>String</td>
-<td>nil</td>
+<td>Text</td>
 <td>https://crmapiqa.cendyn.com/swagger/ui/index#!/Account/Account_Login</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>token</td>
+<td>Text</td>
+<td>GUESTBOOK_TOKEN</td>
 </tr>
 </tbody></table>
 <h1 id='account-information'>Account Information</h1><h2 id='get-pending-amp-available-balance'>Get Pending &amp; Available Balance</h2>
@@ -375,11 +387,11 @@ for getting information relating to a specific user&#39;s account, like getting 
 </thead><tbody>
 <tr>
 <td>token</td>
-<td>String</td>
+<td>Text</td>
 <td>GUESTBOOK_TOKEN received from <a href="#get-account-token">Get Account Token</a></td>
 </tr>
 </tbody></table>
-<h3 id='response'>Response</h3>
+<h3 id='response-2'>Response</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
