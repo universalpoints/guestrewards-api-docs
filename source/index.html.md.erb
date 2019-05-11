@@ -101,7 +101,16 @@ cendyn_account_token | String | nil | https://crmapiqa.cendyn.com/swagger/ui/ind
 
 ## Get Pending & Available Balance
 
-> [6] Example JSON response from a request to get an account's pending & available balance:
+> [6] CURL request example to get an account's pending & available balance:
+
+```shell
+curl --request GET \
+  --url http://api.guestrewards.com/v1/account/balance/ \
+  --header 'authorization: Bearer AUTH_TOKEN' \
+  --data '{"token":"GUESTBOOK_TOKEN"}'
+```
+
+> [7] Example JSON response from a request to get an account's pending & available balance:
 
 ```json
 {
