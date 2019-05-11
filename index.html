@@ -337,7 +337,15 @@ for getting information relating to a specific user&#39;s account, like getting 
 </tbody></table>
 <h1 id='account-information'>Account Information</h1><h2 id='get-pending-amp-available-balance'>Get Pending &amp; Available Balance</h2>
 <blockquote>
-<p>[6] Example JSON response from a request to get an account&#39;s pending &amp; available balance:</p>
+<p>[6] CURL request example to get an account&#39;s pending &amp; available balance:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
+  --url http://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
+  --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span> <span class="se">\</span>
+  --data <span class="s1">'{"token":"GUESTBOOK_TOKEN"}'</span>
+</code></pre>
+<blockquote>
+<p>[7] Example JSON response from a request to get an account&#39;s pending &amp; available balance:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"pending"</span><span class="p">:</span><span class="w"> </span><span class="mf">40.32</span><span class="p">,</span><span class="w">
