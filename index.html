@@ -290,7 +290,7 @@
 <p>[3] Example CURL request passing the TOKEN to authorize an API request:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
-  --url http://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
+  --url https://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
   --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span>
 </code></pre>
 <p><img src="images/client-credentials-grant.png" alt="Client credentials grant" />(https://jwt.io/introduction/)<br><br></p>
@@ -305,7 +305,7 @@
 <p>[4] CURL request example to get a Guestbook account token:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
-  --url http://api.guestrewards.com/v1/account/token/ <span class="se">\</span>
+  --url https://api.guestrewards.com/v1/account/token/ <span class="se">\</span>
   --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span> <span class="se">\</span>
   --data <span class="s1">'{"cendyn_account_token":"CENDYN_TOKEN"}'</span>
 </code></pre>
@@ -357,7 +357,7 @@ for getting information relating to a specific user&#39;s account, like getting 
 <p>[6] CURL request example to get an account&#39;s pending &amp; available balance:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
-  --url http://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
+  --url https://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
   --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span> <span class="se">\</span>
   --data <span class="s1">'{"token":"GUESTBOOK_TOKEN"}'</span>
 </code></pre>
