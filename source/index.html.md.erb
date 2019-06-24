@@ -52,7 +52,7 @@ curl --request POST \
 
 ```shell
 curl --request GET \
-  --url http://api.guestrewards.com/v1/account/balance/ \
+  --url https://api.guestrewards.com/v1/account/balance/ \
   --header 'authorization: Bearer AUTH_TOKEN'
 ```
 <%= image_tag 'images/client-credentials-grant.png'  %>(https://jwt.io/introduction/)<br><br>
@@ -69,7 +69,7 @@ curl --request GET \
 
 ```shell
 curl --request GET \
-  --url http://api.guestrewards.com/v1/account/token/ \
+  --url https://api.guestrewards.com/v1/account/token/ \
   --header 'authorization: Bearer AUTH_TOKEN' \
   --data '{"cendyn_account_token":"CENDYN_TOKEN"}'
 ```
@@ -116,7 +116,7 @@ token | Text | GUESTBOOK_TOKEN
 
 ```shell
 curl --request GET \
-  --url http://api.guestrewards.com/v1/account/balance/ \
+  --url https://api.guestrewards.com/v1/account/balance/ \
   --header 'authorization: Bearer AUTH_TOKEN' \
   --data '{"token":"GUESTBOOK_TOKEN"}'
 ```
