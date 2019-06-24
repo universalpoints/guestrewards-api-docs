@@ -33,7 +33,7 @@ API Documentation for Guestbook White Label
 > [1] CURL request example to get an authorization TOKEN:
 
 ```shell
-curl --request POST \
+curl -X POST \
   --url https://guestrewards.auth0.com/oauth/token \
   --header 'content-type: application/json' \
   --data '{"client_id":"CLIENT_ID","client_secret":"CLIENT_SECRET","audience":"https://guestrewards.auth0.com/api/v2/","grant_type":"client_credentials"}'
@@ -51,7 +51,7 @@ curl --request POST \
 > [3] Example CURL request passing the TOKEN to authorize an API request:
 
 ```shell
-curl --request GET \
+curl -X GET \
   --url https://api.guestrewards.com/v1/account/balance/ \
   --header 'authorization: Bearer AUTH_TOKEN'
 ```
@@ -68,7 +68,7 @@ curl --request GET \
 > [4] CURL request example to get a Guestbook account token:
 
 ```shell
-curl --request GET \
+curl -X GET \
   --url https://api.guestrewards.com/v1/account/token/ \
   --header 'authorization: Bearer AUTH_TOKEN' \
   --data '{"cendyn_account_token":"CENDYN_TOKEN"}'
@@ -115,7 +115,7 @@ token | Text | GUESTBOOK_TOKEN
 > [6] CURL request example to get an account's pending & available balance:
 
 ```shell
-curl --request GET \
+curl -X GET \
   --url https://api.guestrewards.com/v1/account/balance/ \
   --header 'authorization: Bearer AUTH_TOKEN' \
   --data '{"token":"GUESTBOOK_TOKEN"}'
