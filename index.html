@@ -273,7 +273,7 @@
 <blockquote>
 <p>[1] CURL request example to get an authorization TOKEN:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl --request POST <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST <span class="se">\</span>
   --url https://guestrewards.auth0.com/oauth/token <span class="se">\</span>
   --header <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
   --data <span class="s1">'{"client_id":"CLIENT_ID","client_secret":"CLIENT_SECRET","audience":"https://guestrewards.auth0.com/api/v2/","grant_type":"client_credentials"}'</span>
@@ -289,8 +289,8 @@
 <blockquote>
 <p>[3] Example CURL request passing the TOKEN to authorize an API request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
-  --url http://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl -X GET <span class="se">\</span>
+  --url https://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
   --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span>
 </code></pre>
 <p><img src="images/client-credentials-grant.png" alt="Client credentials grant" />(https://jwt.io/introduction/)<br><br></p>
@@ -304,8 +304,8 @@
 <blockquote>
 <p>[4] CURL request example to get a Guestbook account token:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
-  --url http://api.guestrewards.com/v1/account/token/ <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl -X GET <span class="se">\</span>
+  --url https://api.guestrewards.com/v1/account/token/ <span class="se">\</span>
   --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span> <span class="se">\</span>
   --data <span class="s1">'{"cendyn_account_token":"CENDYN_TOKEN"}'</span>
 </code></pre>
@@ -356,8 +356,8 @@ for getting information relating to a specific user&#39;s account, like getting 
 <blockquote>
 <p>[6] CURL request example to get an account&#39;s pending &amp; available balance:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
-  --url http://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl -X GET <span class="se">\</span>
+  --url https://api.guestrewards.com/v1/account/balance/ <span class="se">\</span>
   --header <span class="s1">'authorization: Bearer AUTH_TOKEN'</span> <span class="se">\</span>
   --data <span class="s1">'{"token":"GUESTBOOK_TOKEN"}'</span>
 </code></pre>
